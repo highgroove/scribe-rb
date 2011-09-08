@@ -16,4 +16,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "thrift", "~>0.7.0"
+
+  s.add_development_dependency "rake"
 end
