@@ -7,7 +7,7 @@ from generic *.thrift files.
 This gem tries to alleviate that slight annoyance and package everything
 you need to communicate with Scribe.
 
-## Usage
+## Installation
 
 Add to Gemfile:
 
@@ -15,7 +15,7 @@ Add to Gemfile:
 gem 'scribe-rb'
 ```
 
-Talk to Scribe:
+## Producer (Client)
 
 ```ruby
 # Setup
@@ -33,6 +33,35 @@ client.Log([log_entry])
 
 # Teardown
 transport.close
+```
+
+## Consumer (Server)
+
+```ruby
+# Define a handler that inherits from FacebookService::BaseHandler
+class MyScribeHandler < FacebookService::BaseHandler
+  def Log(messages)
+    # messages will be an array of LogEntry instances from Scribe
+
+    # must return either ResultCode::OK or ResultCode::TRY_LATER
+    ResultCode::OK
+  end
+end
+
+# The rest is boilerplate
+handler   = MyScribeHandler.new("My Scribe Handler")
+processor = Scribe::Processor.new(handler)
+
+transport = Thrift::ServerSocket.new(5678) # 5678 is port number
+
+transportFactory = Thrift::FramedTransportFactory.new
+protocolFactory  = Thrift::NonStrictBinaryProtocolFactory.new
+
+# Other server options exist; check Thrift documentation for details
+server = Thrift::SimpleServer.new(processor, transport, transportFactory, protocolFactory)
+
+# Blocks thread and runs until process is stopped
+server.serve
 ```
 
 ## Hat Tips
