@@ -14,10 +14,27 @@ while creating a Scribe consumer/server.
 
 ## Installation
 
-Add to Gemfile:
+### Bundler
+
+Add to `Gemfile` and run `bundle install`:
 
 ```ruby
 gem 'scribe-rb'
+```
+
+### Without Bundler
+
+Install the gem:
+
+```bash
+gem install scribe-rb
+```
+
+Require it explicitly in your scripts:
+
+```ruby
+require "rubygems"
+require "scribe-rb"
 ```
 
 ## Producer (Client)
