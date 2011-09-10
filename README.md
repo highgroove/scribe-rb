@@ -69,6 +69,7 @@ server.serve
 ## Hat Tips
 
 * [Installing and Using Scribe with Ruby on Mac OS](http://kpumuk.info/development/installing-and-using-scribe-with-ruby-on-mac-os/)
+* [Ruby Web-Services with Facebook’s Thrift](http://www.igvita.com/2007/11/30/ruby-web-services-with-facebooks-thrift/)
 
 ## License
 
