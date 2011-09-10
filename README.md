@@ -1,5 +1,7 @@
 # Scribe For Ruby Made Easy
 
+[![Build Status](https://secure.travis-ci.org/highgroove/scribe-rb.png)](http://travis-ci.org/highgroove/scribe-rb)
+
 To use [Scribe](https://github.com/facebook/scribe), you usually have to
 use [Apache Thrift](http://thrift.apache.org/) to generate Ruby code
 from generic *.thrift files.
