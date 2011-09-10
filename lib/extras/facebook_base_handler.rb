@@ -2,10 +2,14 @@ module FacebookService
   # TODO: Not thread safe
   class BaseHandler
     def initialize(name)
-      @name     = name
-      @alive    = Time.now.to_i
-      @counters = Hash.new { |h, k| h[k] = 0 }
-      @options  = Hash.new
+      @name           = name
+      @alive          = Time.now.to_i
+
+      @counters       = Hash.new { |h, k| h[k] = 0 }
+      @counters_mutex = Mutex.new
+
+      @options        = Hash.new
+      @options_mutex  = Mutex.new
     end
 
     def getName
@@ -25,23 +29,33 @@ module FacebookService
     end
 
     def getCounters
-      @counters
+      @counters_mutex.synchronize do
+        @counters
+      end
     end
 
     def getCounter(key)
-      @counters[key]
+      @counters_mutex.synchronize do
+        @counters[key]
+      end
     end
 
     def setOption(key, value)
-      @options[key] = value
+      @options_mutex.synchronize do
+        @options[key] = value
+      end
     end
 
     def getOption(key)
-      @options[key]
+      @options_mutex.synchronize do
+        @options[key]
+      end
     end
 
     def getOptions
-      @options
+      @options_mutex.synchronize do
+        @options
+      end
     end
 
     def getCpuProfile(*)
