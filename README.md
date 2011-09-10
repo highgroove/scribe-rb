@@ -44,6 +44,9 @@ transport.close
 class MyScribeHandler < FacebookService::BaseHandler
   def Log(messages)
     # Process the array of LogEntry instances passed
+    messages.each do |message|
+      puts "#{message.category}: #{message.message}"
+    end
 
     # If messages were processed correctly, return `ResultCode::OK`
     #
