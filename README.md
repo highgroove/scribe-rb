@@ -43,14 +43,20 @@ transport.close
 # Define a handler that inherits from FacebookService::BaseHandler
 class MyScribeHandler < FacebookService::BaseHandler
   def Log(messages)
-    # messages will be an array of LogEntry instances from Scribe
+    # Process the array of LogEntry instances passed
 
-    # must return either ResultCode::OK or ResultCode::TRY_LATER
+    # If messages were processed correctly, return `ResultCode::OK`
+    #
+    # To tell the Scribe producer/broker to resend messages later (e.g.,
+    # because this process is under too much load), return
+    # `ResultCode::TRY_LATER`
+
+    # Must return `ResultCode::OK` or `ResultCode::TRY_LATER`
     ResultCode::OK
   end
 end
 
-# The rest is boilerplate
+# Setup
 handler   = MyScribeHandler.new("My Scribe Handler")
 processor = Scribe::Processor.new(handler)
 
@@ -59,10 +65,12 @@ transport = Thrift::ServerSocket.new(5678) # 5678 is port number
 transportFactory = Thrift::FramedTransportFactory.new
 protocolFactory  = Thrift::NonStrictBinaryProtocolFactory.new
 
-# Other server options exist; check Thrift documentation for details
+# There are multiple options for server type
+# * [Thrift::SimpleServer](http://rubydoc.info/gems/thrift/0.7.0/Thrift/SimpleServer): single threaded server (simplest)
+# * [Thrift::ThreadedServer](http://rubydoc.info/gems/thrift/0.7.0/Thrift/ThreadedServer): server that spawns a thread to handle messages
+# * [Thrift::ThreadPoolServer](http://rubydoc.info/gems/thrift/0.7.0/Thrift/ThreadPoolServer): server that uses a constant number of threads as workers
+# * [Thrift::NonblockingServer](http://rubydoc.info/gems/thrift/0.7.0/Thrift/NonblockingServer): server that uses non-blocking I/O
 server = Thrift::SimpleServer.new(processor, transport, transportFactory, protocolFactory)
-
-# Blocks thread and runs until process is stopped
 server.serve
 ```
 

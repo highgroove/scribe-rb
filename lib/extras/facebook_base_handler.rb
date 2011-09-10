@@ -1,5 +1,4 @@
 module FacebookService
-  # TODO: Not thread safe
   class BaseHandler
     def initialize(name)
       @name           = name
