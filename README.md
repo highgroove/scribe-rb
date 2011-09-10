@@ -9,6 +9,9 @@ from generic *.thrift files.
 This gem tries to alleviate that slight annoyance and package everything
 you need to communicate with Scribe.
 
+It also contains a some "extras" that alleviate a few gotchas I found
+while creating a Scribe consumer/server.
+
 ## Installation
 
 Add to Gemfile:

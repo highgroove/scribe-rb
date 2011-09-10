@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email       = ["andy@highgroove.com"]
   s.homepage    = "http://github.com/highgroove/scribe-rb"
   s.summary     = %q{Generated scribe and fb303 bindings for Ruby packed into a gem}
-  s.description = %q{}
+  s.description = %q{Everything you need to build a Ruby producer/client or consumer/server of Scribe messages}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
