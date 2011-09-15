@@ -5,3 +5,5 @@ rvm:
   - rbx-2.0
   - jruby
   - ree
+notifications:
+  disabled: true
