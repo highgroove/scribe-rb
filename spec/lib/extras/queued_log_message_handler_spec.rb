@@ -35,5 +35,13 @@ describe FacebookService::QueuedLogMessageHandler do
       subject.Log(["foo"]).should eq(ResultCode::TRY_LATER)
       subject.queue.size.should be_zero
     end
+
+    it "does not accept messages and returns ResultCode::TRY_LATER if the size limit would be reached by adding the messages" do
+      subject.message_limit = 1
+
+      subject.Log(["foo"]).should eq(ResultCode::OK)
+      subject.Log(["bar"]).should eq(ResultCode::TRY_LATER)
+      subject.queue.size.should eq(1)
+    end
   end
 end

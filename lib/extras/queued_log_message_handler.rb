@@ -16,7 +16,7 @@ module FacebookService
     end
 
     def Log(messages)
-      if self.message_limit.nil? || self.queue.size < self.message_limit
+      if self.message_limit.nil? || (messages.length + self.queue.size) <= self.message_limit
         messages.each do |message|
           self.queue.push(message)
         end
