@@ -118,8 +118,7 @@ handler = FacebookService::QueuedLogMessageHandler("My Scribe Handler")
 handler.message_limit = 100000 # accept up to 100000 messages at a time; if set to nil (default), there is no limit
 
 Thread.new do
-  while message = handler.queue.pop # will block until a message is
-available
+  while message = handler.queue.pop # will block until a message is available
     # Do some expensive operation with `message`
   end
 end
