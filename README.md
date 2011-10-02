@@ -97,6 +97,38 @@ server = Thrift::SimpleServer.new(processor, transport, transportFactory, protoc
 server.serve
 ```
 
+### QueuedLogMessageHandler
+
+It is not advisable to do any expensive operation within the `Log`
+method. If a response code is not received by Scribe within a few
+seconds (by default), Scribe will assume the connection is dead. If it
+is configured with a buffer store, the same messages will be sent over
+and over again, potentially failing each time.
+
+To alleviate this, scribe-rb includes the
+`FacebookService::QueuedLogMessageHandler` class which implements a
+`Log` method that adds messages to a thread-safe in-memory queue. This
+happens quickly and allows expensive operations to occur in a different
+thread that does not block Scribe.
+
+An example usage:
+
+```ruby
+handler = FacebookService::QueuedLogMessageHandler("My Scribe Handler")
+handler.message_limit = 100000 # accept up to 100000 messages at a time; if set to nil (default), there is no limit
+
+Thread.new do
+  while message = handler.queue.pop # will block until a message is
+available
+    # Do some expensive operation with `message`
+  end
+end
+
+# ...
+server = Thrift::SimpleServer.new(processor, transport, transportFactory, protocolFactory)
+server.serve
+```
+
 ## Hat Tips
 
 * [Installing and Using Scribe with Ruby on Mac OS](http://kpumuk.info/development/installing-and-using-scribe-with-ruby-on-mac-os/)
