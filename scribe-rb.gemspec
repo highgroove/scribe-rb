@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "scribe-rb"
-  s.version     = "2.2.0"
+  s.version     = "2.2.1.rc1"
   s.authors     = ["Andy Lindeman"]
   s.email       = ["andy@highgroove.com"]
   s.homepage    = "http://github.com/highgroove/scribe-rb"
