@@ -9,10 +9,10 @@ module FacebookService
     # later.
     attr_accessor :message_limit
 
-    def initialize(name)
+    def initialize(name, opts = {})
       super(name)
 
-      @queue = Queue.new
+      @queue = opts[:queue] || Queue.new
     end
 
     def Log(messages)

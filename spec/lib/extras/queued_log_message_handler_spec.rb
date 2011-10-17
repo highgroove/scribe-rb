@@ -44,4 +44,13 @@ describe FacebookService::QueuedLogMessageHandler do
       subject.queue.size.should eq(1)
     end
   end
+
+  context "with a custom queue" do
+    let(:queue) { Queue.new }
+    subject     { described_class.new("Test Handler", :queue => queue) }
+
+    it "accepts a custom queue object" do
+      subject.queue.should equal(queue)
+    end
+  end
 end
