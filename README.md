@@ -130,7 +130,7 @@ server.serve
 
 #### Custom Queue Implementation
 
-A custom queue object (e.g., [https://github.com/alindeman/circular_queue](circular_queue))
+A custom queue object (e.g., [circular_queue](https://github.com/alindeman/circular_queue))
 can be specified by passing a `:queue` option to the constructor.
 
 ```ruby
