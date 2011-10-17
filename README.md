@@ -114,7 +114,7 @@ thread that does not block Scribe.
 An example usage:
 
 ```ruby
-handler = FacebookService::QueuedLogMessageHandler("My Scribe Handler")
+handler = FacebookService::QueuedLogMessageHandler.new("My Scribe Handler")
 handler.message_limit = 100000 # accept up to 100000 messages at a time; if set to nil (default), there is no limit
 
 Thread.new do
@@ -127,6 +127,18 @@ end
 server = Thrift::SimpleServer.new(processor, transport, transportFactory, protocolFactory)
 server.serve
 ```
+
+#### Custom Queue Implementation
+
+A custom queue object (e.g., [https://github.com/alindeman/circular_queue](circular_queue))
+can be specified by passing a `:queue` option to the constructor.
+
+```ruby
+handler = FacebookService::QueuedLogMessageHandler.new("My Scribe Handler",
+                                                       :queue => CircularQueue.new(50000))
+```
+
+The custom queue object must respond to the `push` and `size` messages.
 
 ## Hat Tips
 
